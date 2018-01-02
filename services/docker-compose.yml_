@@ -1,0 +1,76 @@
+version: '2.0'
+services:
+  ############################################################################
+  #  Functional services
+  ############################################################################
+  #
+  # Entry point - API gateway
+  #
+  apigateway:
+    build: ./apigateway
+    ports:
+      - "80:80"
+    links:
+     - users
+     - accounts
+     - transactions
+     - payment
+    depends_on:
+     - payment
+  #
+  # Users management service
+  #
+  users:
+    build: ./users
+    ports:
+     - "9081:80"
+    volumes:
+     - usersvol:/usersvol
+  #
+  # Accounts management service
+  #
+  accounts:
+    build: ./accounts
+    ports:
+     - "9082:80"
+    volumes:
+     - accountsvol:/accountsvol
+  #
+  # Transactions management service
+  #
+  transactions:
+    build: ./transactions
+    ports:
+     - "9083:80"
+    volumes:
+     - transactionsvol:/transactionsvol
+  #
+  # Payment management service
+  #
+  payment:
+    build: ./payment
+    ports:
+     - "9084:80"
+    volumes:
+     - paymentsvol:/paymentsvol
+    links:
+     - users
+     - accounts
+     - transactions
+    depends_on:
+     - users
+     - accounts
+     - transactions
+
+
+##############################################################################
+#  Data volumes
+##############################################################################
+volumes:
+  usersvol: {}
+  accountsvol: {}
+  transactionsvol: {}
+  paymentsvol: {}
+
+
+
