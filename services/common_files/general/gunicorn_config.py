@@ -26,10 +26,15 @@ threads = 1
 # Affects the Eventlet and Gevent worker types.
 #worker_connections = 1#30
 
+if os.getenv('ISGAME', False) == 'True':
+	try:
+		from syncworkerzmq import SyncWorkerZMQ
+		worker_class = 'syncworkerzmq.SyncWorkerZMQ'
+	except ImportError as e:
+		pass
 
 # Security
 if os.getenv('MTLS', False) == 'True':
-	print "Gunicorn SSL enabled"
 	# SSL key file
 	keyfile = 'servicekey.key'
 	# SSL certificate file
@@ -38,8 +43,7 @@ if os.getenv('MTLS', False) == 'True':
 	cert_reqs = 1
 	# CA certificates file
 	ca_certs = 'cacert.pem'
-else:
-	print "Gunicorn SSL disabled"
+
 # The maximum size of HTTP request line in bytes.
 # Request-line consists of the HTTP method, URI, and protocol version.
 # Value is a number from 0 (unlimited) to 8190.
