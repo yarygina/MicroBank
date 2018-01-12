@@ -28,6 +28,7 @@ else:
         return real_decorator
 
 
+
 # Setup Flask
 # FLASK_DEBUG = getEnvVar('FLASK_DEBUG', False)
 # FLASK_HOST = '0.0.0.0'
@@ -160,7 +161,10 @@ def accountsAccNumPost(accNum):
     return niceJson(res, res_code)
 
 
-
+# All APIs provided by this application, automatically generated
+LOCAL_APIS = allLinks(app)
+# All external APIs that this application relies on, manually created
+KNOWN_REMOTE_APIS = []
 
 
 # def main():

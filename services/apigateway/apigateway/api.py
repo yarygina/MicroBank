@@ -221,6 +221,14 @@ def logout():
     raise NotImplementedError()
 
 
+# All APIs provided by this application, automatically generated
+LOCAL_APIS = allLinks(app)
+# All external APIs that this application relies on, manually created
+KNOWN_REMOTE_APIS = [USERS_SERVICE_URL + "users",
+                    ACCOUNTS_SERVICE_URL + "accounts",
+                    TRANSACTIONS_SERVICE_URL + "transactions",
+                    PAYMENT_SERVICE_URL + "pay",
+                    USERS_SERVICE_URL + "users/login"]
 
 
 # def main():

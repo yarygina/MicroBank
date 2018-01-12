@@ -110,6 +110,11 @@ def cancelTransaction(number):
     return niceJson(res, res_code)
 
 
+# All APIs provided by this application, automatically generated
+LOCAL_APIS = allLinks(app)
+# All external APIs that this application relies on, manually created
+KNOWN_REMOTE_APIS = []
+
 
 # def main():
 #     logger.info("%s service starting now: MTLS=%s, Token=%s" \

@@ -21,7 +21,7 @@ fi
 
 if [[ "$ISGAME" == "True" ]]; then
 	if [[ -f $MODSECURITY_WRAPPER_FILE ]]; then
-		echo Starting the ModSecurity wrapper as a separate process.
+		echo Starting the ModSecurity wrapper.
 		$MODSECURITY_WRAPPER_FILE &
 	else
 		echo $MODSECURITY_WRAPPER_FILE not found. Terminating.
@@ -29,7 +29,7 @@ if [[ "$ISGAME" == "True" ]]; then
 		exit
 	fi
 	if [[ -f $GAME_ENGINE_CLIENT_FILE ]]; then
-		echo Starting the game engine client as a separate process.
+		echo Starting the game engine client.
 		$GAME_ENGINE_CLIENT_FILE &
 	else
 		echo $GAME_ENGINE_CLIENT_FILE not found. Terminating.

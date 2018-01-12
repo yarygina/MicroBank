@@ -137,6 +137,13 @@ def cancelTransaction(transNum):
         return res.json()['number']
 
 
+# All APIs provided by this application, automatically generated
+LOCAL_APIS = allLinks(app)
+# All external APIs that this application relies on, manually created
+KNOWN_REMOTE_APIS = [ACCOUNTS_SERVICE_URL + "accounts",
+                    TRANSACTIONS_SERVICE_URL + "transactions"]
+
+
 
 # def main():
 #     logger.info("%s service starting now: MTLS=%s, Token=%s" \
