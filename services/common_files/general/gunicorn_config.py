@@ -16,15 +16,21 @@ bind = "0.0.0.0:%s" % FLASK_PORT
 
 # Worker Processes
 # The number of worker processes for handling requests.
-workers = 1 #multiprocessing.cpu_count()
+# Recommended (2 x $num_cores) + 1
+# http://gunicorn-docs.readthedocs.io/en/19.7.1/design.html
+workers = 1#(2*multiprocessing.cpu_count())+1
 # Run each worker with the specified number of threads.
 threads = 1
 
+keepalive = 75 # default: 2 seconds
+timeout = 90
+
 # The type of workers to use. The default class is sync.
-#worker_class = 'gevent'
+worker_class = 'gevent'
 # The maximum number of simultaneous clients.
 # Affects the Eventlet and Gevent worker types.
-#worker_connections = 1#30
+#worker_connections = 30
+
 
 if os.getenv('ISGAME', False) == 'True':
 	try:
