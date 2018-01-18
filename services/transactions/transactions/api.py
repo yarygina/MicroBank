@@ -21,7 +21,8 @@ if getEnvVar('TOKEN', False):
         logger.error("Module MiSSFire is required. Terminating.")
         exit()
 else:
-    import requests
+    from general import Requests
+    requests = Requests()
     def jwt_conditional(reqs):
         def real_decorator(f):
             return f

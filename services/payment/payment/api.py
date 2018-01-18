@@ -29,7 +29,8 @@ try:
                     return f
                 return real_decorator
     else:
-        import requests
+        from general import Requests
+        requests = Requests()
         def jwt_conditional(reqs):
             def real_decorator(f):
                 return f
@@ -85,7 +86,6 @@ def pay():
                 res_code = 200
     except Exception as e:
         logger.error("Payment: %s" % e)
-
     return niceJson(res, res_code)
 
 
@@ -142,7 +142,6 @@ LOCAL_APIS = allLinks(app)
 # All external APIs that this application relies on, manually created
 KNOWN_REMOTE_APIS = [ACCOUNTS_SERVICE_URL + "accounts",
                     TRANSACTIONS_SERVICE_URL + "transactions"]
-
 
 
 # def main():

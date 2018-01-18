@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# Simple build script for a microservices banking project.
+# Simple build script for a microservices bank project.
 #
-# Author: Christian Otterstad
+# Authors: Christian Otterstad and Tetiana Yarygina
 #
 
 DOCKER_COMPOSE_FILE="docker-compose.yml"
@@ -17,7 +17,7 @@ RESTART=0
 DOCKER_DEL_VOLUMES="docker volume ls | cut -d ' ' -f 16 | xargs docker volume rm"
 
 function arg_parse {
-	usage="$(basename "$0") [-h] [-c (only copy common files, no build)] [-d (Delete all docker files prior to building)] [-b (Disables building)]"
+	usage="$(basename "$0") [-h] [-c (only copy common files, no build)] [-i (Delete all docker files prior to building)] [-b (Disables building)]"
 
 	while getopts 'hcdbrvuf' option; do
 		case "$option" in
@@ -27,10 +27,10 @@ function arg_parse {
 			c) echo "Only coping common files."
 			   BUILD_FULL=0
 			   ;;
-			d) echo "Deleting Docker images."
+			i) echo "Deleting Docker images."
 			   DELETE=1
 			   ;;
-			f) echo "File clean up."
+			d) echo "File clean up."
 			   clean_files
 			   exit 0
 			   ;;

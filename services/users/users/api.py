@@ -18,7 +18,8 @@ try:
         from MiSSFire import jwt_conditional, Requests
         requests = Requests()
     else:
-        import requests
+        from general import Requests
+        requests = Requests()
         def jwt_conditional(reqs):
             def real_decorator(f):
                 return f

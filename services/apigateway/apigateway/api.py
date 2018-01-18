@@ -11,33 +11,11 @@ from general import log, getEnvVar, isDocker, niceJson, allLinks
 serviceType = os.path.basename(os.getcwd())
 logger = log(serviceType).logger
 
-# Setup MiSSFire
-try:
+
+if getEnvVar('MTLS', False):
+    PROT = 'https'
+else:
     PROT = 'http'
-    if getEnvVar('MTLS', False) or getEnvVar('TOKEN', False):
-        from MiSSFire import Requests
-        requests = Requests()
-        
-        if getEnvVar('MTLS', False):
-            PROT = 'https'
-
-        if getEnvVar('TOKEN', False):
-            from MiSSFire import jwt_conditional
-        else:
-            def jwt_conditional(reqs):
-                def real_decorator(f):
-                    return f
-                return real_decorator
-    else:
-        import requests
-        def jwt_conditional(reqs):
-            def real_decorator(f):
-                return f
-            return real_decorator
-except ImportError:
-    logger.error("Module MiSSFire is required. Terminating.")
-    exit()
-
 
 # Setup Flask
 # FLASK_DEBUG = getEnvVar('FLASK_DEBUG', False)
@@ -54,6 +32,36 @@ else:
     ACCOUNTS_SERVICE_URL     = '%s://%s:%s/' % (PROT, '0.0.0.0', 9082)
     TRANSACTIONS_SERVICE_URL = '%s://%s:%s/' % (PROT, '0.0.0.0', 9083)
     PAYMENT_SERVICE_URL      = '%s://%s:%s/' % (PROT, '0.0.0.0', 9084)
+
+
+# Setup MiSSFire
+try:
+    #PROT = 'http'
+    if getEnvVar('MTLS', False) or getEnvVar('TOKEN', False):
+        from MiSSFire import Requests
+        requests = Requests()
+
+        # if getEnvVar('MTLS', False):
+        #     PROT = 'https'
+
+        if getEnvVar('TOKEN', False):
+            from MiSSFire import jwt_conditional
+        else:
+            def jwt_conditional(reqs):
+                def real_decorator(f):
+                    return f
+                return real_decorator
+    else:
+        from general import Requests
+        requests = Requests()
+        def jwt_conditional(reqs):
+            def real_decorator(f):
+                return f
+            return real_decorator
+except ImportError:
+    logger.error("Module MiSSFire is required. Terminating.")
+    exit()
+
 
 app = Flask(__name__)
 

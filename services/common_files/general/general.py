@@ -3,6 +3,7 @@ import sys
 import json
 import logging
 
+import requests
 from flask import make_response
 
 # Disable console messages from Flask server
@@ -28,9 +29,10 @@ class log:
     def my_handler(self, type, value, tb):
         self.logger.exception("Uncaught exception:", exc_info=(type, value, tb))
 
-# Resolve the environment variables if any
 def getEnvVar(varName, defaultVal):
-    """Translate string variables into boolean variables."""
+    """Resolve the environment variables if any.
+
+    Translate string variables into boolean variables."""
     varVal = os.getenv(varName, defaultVal)
     if varVal == 'True': varVal = True
     elif varVal == 'False': varVal = False
@@ -75,3 +77,14 @@ def json_serial(obj):
         serial = obj.isoformat()
         return serial
     raise TypeError ("Type not serializable")
+
+class Requests():
+    """Requests+session."""
+    def __init__(self):
+        self.s = requests.Session()
+
+    def get(self, *args, **kwargs):
+        return self.s.get(*args, **kwargs)
+
+    def post(self, *args,**kwargs):
+        return self.s.post(*args, **kwargs)
